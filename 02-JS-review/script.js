@@ -143,7 +143,9 @@ function getBook(id) {
   return data.find((d) => d.id === id);
 }
 
-const book = getBook(1);
+/*
+
+const book = getBook(3);
 book;
 // book;
 // const title = book.title;
@@ -171,8 +173,141 @@ const updatedBook = {
 };
 updatedBook;
 
-const summary = `${title} book has ${pages} pages and was written by ${author} and published in ${publicationDate.split(
-  "-",
-  1
-)} `;
+const summary = `${title} book has ${pages} pages and was written by ${author} and published in ${getYear(
+  publicationDate
+)}. The book has ${hasMovieAdaptation ? "" : "not"} been adapted as movie `;
+
 summary;
+
+const pagesRange = pages > 1100 ? "Over 1100 pages" : "Less than 1100 pages";
+pagesRange;
+
+function getYear(str) {
+  return publicationDate.split("-", 1);
+}
+
+console.log(getYear(publicationDate));
+
+// Arrow function
+const getArrowYear = (str) => publicationDate.split("-", 1);
+console.log(getArrowYear(publicationDate));
+
+// Short-circuiting
+console.log(true && "Some string");
+console.log(false && "Some string");
+console.log(hasMovieAdaptation && "This book has a movie adaptation");
+
+// falsy - 0, '', null, undefined
+console.log("eldante" && "Some string");
+console.log(undefined && "Some string");
+
+console.log(true || "Some string");
+console.log(false || "Some string");
+
+console.log(book.translations.chinese);
+const chineseTranslation = book.translations.chinese || "Not translated";
+chineseTranslation;
+
+console.log(book.reviews.librarything?.reviewsCount);
+const wrongCount = book.reviews.librarything?.reviewsCount || "no data";
+wrongCount;
+
+// Nullish coaelescing operator (returns second value when first one is null or undefined, but not when empty string or zero)
+const correctCount = book.reviews.librarything?.reviewsCount ?? "no data";
+correctCount;
+
+// Optional chaining
+function getTotalReviewCount(book) {
+  const goodreads = book.reviews.goodreads.reviewsCount;
+  const librarything = book.reviews.librarything?.reviewsCount ?? 0;
+  return goodreads + librarything;
+}
+
+console.log(getTotalReviewCount(book));
+
+*/
+
+/*
+
+// Array Map Method
+function getTotalReviewCount(book) {
+  const goodreads = book.reviews.goodreads.reviewsCount;
+  const librarything = book.reviews.librarything?.reviewsCount ?? 0;
+  return goodreads + librarything;
+}
+
+const books = getBooks();
+const titles = books.map((book) => book.title);
+titles;
+
+const essentialData = books.map(
+  (book) =>
+    book.title +
+    " - " +
+    book.author +
+    " - " +
+    getTotalReviewCount(book) +
+    " reviews"
+);
+essentialData;
+
+const longBooks = books
+  .filter((book) => book.pages > 600)
+  .filter((book) => book.translations.chinese);
+longBooks;
+
+// Array Reduce Method - reduce entire array to one value
+const pagesAllBooks = books.reduce((acc, book) => acc + book.pages, 0);
+pagesAllBooks;
+
+// Array Sort Method - method that changes original array - mutating data (not good in react, thats why we create copy) arr.slice()
+const arr = [3, 7, 1, 9, 6];
+const sorted = arr.slice().sort((a, b) => a - b);
+sorted;
+arr;
+
+const sortedByPages = books.slice().sort((a, b) => b.pages - a.pages);
+sortedByPages;
+
+// Immutable Arrays
+// 1. Add a book object to arry
+const newBook = {
+  id: 6,
+  title: "Harry Potter and the Order of the Phoenix",
+  author: "J. K. Rowling",
+};
+
+const newBooksArray = [...books, newBook];
+newBooksArray;
+
+// 2. Delete book object from array
+const booksAfterDelete = newBooksArray.filter((book) => book.id !== 3);
+booksAfterDelete;
+
+// 3. Update book object in the array
+
+const booksAfterUpdate = booksAfterDelete.map((book) =>
+  book.id === 1 ? { ...book, pages: 1230 } : book
+);
+booksAfterUpdate;
+
+*/
+
+// Asynchronous Javascript: Promises - pending, rejected, fullfilled
+fetch("https://jsonplaceholder.typicode.com/todos")
+  .then((response) => response.json())
+  .then((data) => console.log(data[0].title));
+
+console.log("eldante");
+
+// Async/Await
+
+const getTodos = async () => {
+  const resp = await fetch("https://jsonplaceholder.typicode.com/todos");
+  const data = await resp.json();
+
+  return data;
+};
+
+const todosData = getTodos();
+console.log(todosData);
