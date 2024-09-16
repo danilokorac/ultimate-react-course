@@ -7,8 +7,17 @@ const messages = [
 ];
 
 export default function App() {
+  return (
+    <div>
+      <Steps />
+      <Steps />
+    </div>
+  );
+}
+
+function Steps() {
   const [step, setStep] = useState(1);
-  const [isOpen, setIsOpen] = useState();
+  const [isOpen, setIsOpen] = useState(true);
 
   function handlePrevious() {
     step > 1
@@ -18,13 +27,13 @@ export default function App() {
   }
 
   function handleNext() {
-    // when updating the state based on the current state value use (state) => / do something with it /
+    // when updating the state based on the current state value  use (state) => / do something with it /
     step < 3 ? setStep((step) => step + 1) : alert("There are no more steps");
     console.log(step);
   }
 
   return (
-    <>
+    <div>
       <button className="close" onClick={() => setIsOpen((is) => !is)}>
         &times;
       </button>
@@ -55,6 +64,6 @@ export default function App() {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }
